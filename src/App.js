@@ -1,24 +1,28 @@
-import logo from './logo.svg';
-import './App.css';
-
+import { useState } from "react";
+import { Grommet } from "grommet";
+import ThemeContext from "./context/ThemeContext";
+import { theme } from "./theme/brandTheme";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import Home from "./components/Home";
+import LoginContext from "./context/LoginContext";
 function App() {
+  const [isLightTheme, setIsLightTheme] = useState(true);
+  const [isLoggedin, setisLoggedin] = useState(true);
+  const [loginInfo, setLoginInfo] = useState({ name: "", email: "" });
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
+    <Router>
+      <ThemeContext.Provider value={{ isLightTheme, setIsLightTheme }}>
+        <LoginContext.Provider
+          value={{ isLoggedin, loginInfo, setisLoggedin, setLoginInfo }}
         >
-          Learn React
-        </a>
-      </header>
-    </div>
+          <Grommet theme={theme} themeMode={isLightTheme ? "light" : "dark"}>
+            <Routes>
+              <Route path="/" element={<Home />} />
+            </Routes>
+          </Grommet>
+        </LoginContext.Provider>
+      </ThemeContext.Provider>
+    </Router>
   );
 }
 
