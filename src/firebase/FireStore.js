@@ -9,6 +9,7 @@ import {
   orderBy,
   startAt,
   limit,
+  endAt,
 } from "firebase/firestore";
 const db = getFirestore(app);
 
@@ -33,7 +34,12 @@ const readAll = async () => {
 };
 const readPaginated = async (start) => {
   const moviesRef = collection(db, "movies");
-  const q = query(moviesRef, orderBy("ranking"), startAt(start), limit(10));
+  const q = query(
+    moviesRef,
+    orderBy("ranking"),
+    startAt(start),
+    endAt(start + 9)
+  );
   const querySnapshot = await getDocs(q);
   const data = [];
   querySnapshot.forEach((doc) => {

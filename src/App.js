@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Grommet } from "grommet";
 import ThemeContext from "./context/ThemeContext";
 import { theme } from "./theme/brandTheme";
@@ -6,8 +6,11 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./components/Home";
 import LoginContext from "./context/LoginContext";
 import Singin from "./components/Signin";
-// import { upload } from "./firebase/cron_jobs/dataUpload";
+import { upload } from "./firebase/cron_jobs/dataUpload";
 function App() {
+  // useEffect(() => {
+  //   upload();
+  // }, []);
   const [isLightTheme, setIsLightTheme] = useState(true);
   const [isLoggedin, setisLoggedin] = useState(false);
   const [loginInfo, setLoginInfo] = useState({
