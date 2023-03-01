@@ -3,14 +3,20 @@ import { Box, Header, Button, Text, Avatar, Menu } from "grommet";
 import { Menu as MenuIcon, Video, Sun, Moon, User } from "grommet-icons";
 import ThemeContext from "../context/ThemeContext";
 import LoginContext from "../context/LoginContext";
+import { Link } from "react-router-dom";
 
 const HeaderBar = () => {
   const { isLightTheme, setIsLightTheme } = useContext(ThemeContext);
-  const { isLoggedin, loginInfo } = useContext(LoginContext);
+  const { isLoggedin, setisLoggedin, loginInfo, setLoginInfo } =
+    useContext(LoginContext);
   const [thCounter, setThCounter] = useState(0);
   const changeTheme = () => {
     setThCounter((prevState) => prevState + 1);
     setIsLightTheme(!isLightTheme);
+  };
+  const handleLogout = () => {
+    setisLoggedin(false);
+    setLoginInfo({});
   };
   return (
     <Header background="background-front" fill="horizontal" pad="small" sticky>
@@ -37,17 +43,17 @@ const HeaderBar = () => {
         </Button>
         {isLoggedin ? (
           <Menu
-            label={
-              <Avatar background="brand" size="small">
-                <Text size="small">SB</Text>
-              </Avatar>
-            }
-            items={[{ label: "Log Out" }]}
+            label={<Avatar size="medium" src={loginInfo.photoURL} />}
+            items={[{ label: <Button onClick={handleLogout}>Log Out</Button> }]}
           />
         ) : (
-          <Avatar background={isLightTheme === "background-front" && "brand"}>
-            <User color={isLightTheme ? "brand" : "text"} />
-          </Avatar>
+          <Link to="signin" style={{ textDecoration: "none" }}>
+            <Avatar
+              background={isLightTheme === true ? "brand" : "background-front"}
+            >
+              <User color="white" />
+            </Avatar>
+          </Link>
         )}
       </Box>
     </Header>

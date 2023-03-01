@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { Box, Heading, Grid, Text, Layer } from "grommet";
 import MovieCard from "../shared/MovieCard";
 import { readPaginated } from "../../firebase/FireStore";
-const Trending = () => {
+const AllTimeHits = () => {
   const [trending, setTrending] = useState([]);
   const [loading, setLoading] = useState(true);
   useEffect(() => {
     const res = async () => {
-      const data = await readPaginated(1);
+      const data = await readPaginated(11);
       setTrending(data);
       setLoading(false);
     };
@@ -15,7 +15,7 @@ const Trending = () => {
   }, []);
   return (
     <Box>
-      <Heading margin="medium">Trending</Heading>
+      <Heading margin="medium">All time Hits</Heading>
       {loading === true ? (
         <Layer>
           <Text>Loading...</Text>
@@ -38,4 +38,4 @@ const Trending = () => {
   );
 };
 
-export default Trending;
+export default AllTimeHits;
